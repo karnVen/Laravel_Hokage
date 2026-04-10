@@ -11,8 +11,11 @@ Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 
 // PROTECTED routes — only employers can post/delete jobs
 // <--- THIS IS THE TOPIC FEATURE
+
+    Route::get('/jobs/create', function(){return view('jobs.create');})->name('jobs.create');
+
 Route::middleware(['auth', EnsureUserIsEmployer::class])->group(function () {
-    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+    //Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
     Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('jobs.destroy');
 });
