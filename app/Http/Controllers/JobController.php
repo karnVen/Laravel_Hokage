@@ -8,7 +8,9 @@ class JobController extends Controller
 {
     public function index()
     {
-        return 'Showing a list of all jobs (index method)';
+        // <--- THIS IS THE TOPIC FEATURE
+        // Returning a standard View response
+        return view('jobs.index');
     }
 
     public function create()
@@ -18,33 +20,25 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        // <--- THIS IS THE TOPIC FEATURE
-        // Safety: Extract only the exact text fields we want, ignoring any injected malicious fields
         $data = $request->only(['title', 'company', 'location', 'salary', 'description']);
-
-        // <--- THIS IS THE TOPIC FEATURE
-        // Safely extract the checkbox as a true/false boolean
         $data['is_remote'] = $request->boolean('is_remote');
 
-        // <--- THIS IS THE TOPIC FEATURE
-        // Handle file upload if present and valid
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
-            
-            // <--- THIS IS THE TOPIC FEATURE
-            // Store the file in the 'public/logos' directory and save the path
             $data['logo_path'] = $request->file('logo')->store('logos', 'public');
         }
 
-        // Simulate a validation failure for demonstration (since we haven't learned true Validation yet)
         if (empty($data['title'])) {
             // <--- THIS IS THE TOPIC FEATURE
-            return redirect('/jobs/create')->withInput();
+            // Redirect response back to the previous page with old input
+            return back()->withInput();
         }
 
-        // We haven't covered Eloquent DB saving yet, so we will just return the array to see it worked
-        // Job::create($data); 
+        // Simulate saving to the DB...
         
-        return $data;
+        // <--- THIS IS THE TOPIC FEATURE
+        // Redirect response to a named route, flashing a success message
+        return redirect()->route('jobs.index')
+            ->with('status', 'Your job listing was posted successfully!');
     }
 
     public function show(string $id)
@@ -52,7 +46,19 @@ class JobController extends Controller
         return 'Showing specific details for job ID: ' . $id;
     }
 
-    public function edit(string $id)
+    // Custom method to demonstrate JSON
+    public function apiIndex()
+    {
+        // <--- THIS IS THE TOPIC FEATURE
+        // Laravel automatically converts arrays to JSON responses
+        return [
+            ['title' => 'Laravel Dev', 'company' => 'Acme Corp'],
+            ['title' => 'Vue Expert', 'company' => 'StartUp Inc']
+        ];
+    }
+    
+    // ... (keep edit, update, destroy methods as they were)
+     public function edit(string $id)
     {
         return 'Showing the edit form for job ID: ' . $id;
     }
