@@ -38,6 +38,8 @@ class JobController extends Controller
     {
         //
         return "this is {$id}";
+
+    
     }
 
     /**
