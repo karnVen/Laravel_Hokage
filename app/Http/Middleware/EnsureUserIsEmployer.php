@@ -21,4 +21,5 @@ class EnsureUserIsEmployer
         }
         return $next($request);
     }
+    
 }

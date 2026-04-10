@@ -6,65 +6,48 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function index()
     {
-        //
-        return "welcom my dear";
+        return 'Showing a list of all jobs (index method)';
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function create()
     {
-        //
-        return view('create');
+        // We link this back to the view we created in the CSRF topic
+        return view('jobs.create'); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function store(Request $request)
     {
-        //
+        // $request->title pulls data from the form we made earlier
+        $title = $request->input('title');
+        return 'Job stored successfully! Title: ' . $title;
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function show(string $id)
     {
-        //
-        return "this is {$id}";
-
-    
+        return 'Showing specific details for job ID: ' . $id;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function edit(string $id)
     {
-        //
+        return 'Showing the edit form for job ID: ' . $id;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function update(Request $request, string $id)
     {
-        //
+        return 'Updating job ID ' . $id . ' with new data';
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // <--- THIS IS THE TOPIC FEATURE
     public function destroy(string $id)
     {
-        //
-        return "{$id}";
+        return 'Deleted job ID: ' . $id;
     }
 }
