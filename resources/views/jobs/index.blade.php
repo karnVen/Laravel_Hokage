@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>All Jobs</title>
-    <style>
-        .success-banner { background: #d4edda; color: #155724; padding: 10px; margin-bottom: 20px; border: 1px solid #c3e6cb; }
-    </style>
-</head>
-<body>
-    <h1>Community Job Board</h1>
+@extends('layouts.app')
+
+@section('content')
+    <h1>Available Roles ({{ $total }})</h1>
 
     @if (session('status'))
-        <div class="success-banner">
+        <div class="success-banner" style="background: #d4edda; padding: 10px; color: #155724;">
             {{ session('status') }}
         </div>
     @endif
 
-    <a href="/jobs/create">Post a New Job</a>
-
-    <p>Job list will appear here soon...</p>
-</body>
-</html>
+    @foreach ($jobs as $job)
+        <div class="job-card">
+            <h2>{{ $job['title'] }}</h2>
+            <p>{{ $job['company'] }}</p>
+            <a href="/jobs/{{ $job['id'] }}">View Details</a>
+        </div>
+    @endforeach
+@endsection

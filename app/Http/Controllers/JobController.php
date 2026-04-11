@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\View;
+
 class JobController extends Controller
 {
-    public function index()
+   public function index()
     {
+        // We will fake database data for now since we haven't learned Models
+        $mockJobs = [
+            ['id' => 1, 'title' => 'Laravel Dev', 'company' => 'Acme'],
+            ['id' => 2, 'title' => 'Vue Expert', 'company' => 'StartUp Inc']
+        ];
+        
         // <--- THIS IS THE TOPIC FEATURE
-        // Returning a standard View response
-        return view('jobs.index');
+        // Passing data array to the view
+        return view('jobs.index', [
+            'jobs' => $mockJobs,
+            'total' => 2
+        ]);
     }
 
     public function create()
@@ -43,7 +54,16 @@ class JobController extends Controller
 
     public function show(string $id)
     {
-        return 'Showing specific details for job ID: ' . $id;
+        // <--- THIS IS THE TOPIC FEATURE
+        // Checking if the view file actually exists before returning it
+        if (View::exists('jobs.show')) {
+            // Using the alternative ->with() syntax
+            return view('jobs.show')
+                ->with('jobId', $id)
+                ->with('jobTitle', 'Sample Job for ID ' . $id);
+        }
+
+        return 'View not found!';
     }
 
     // Custom method to demonstrate JSON
