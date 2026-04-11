@@ -1,3 +1,17 @@
+/* <--- THIS IS THE TOPIC FEATURE */
+/* These directives tell Vite to inject Tailwind's core styles during compilation */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom scoped CSS for the Job Board */
+.job-card {
+    /* <--- THIS IS THE TOPIC FEATURE */
+    /* Using Tailwind's @apply inside our raw CSS */
+    @apply p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow;
+    background-color: #ffffff;
+}
+
+.badge {
+    @apply px-2 py-1 text-xs font-bold text-white bg-blue-600 rounded-full;
+}
