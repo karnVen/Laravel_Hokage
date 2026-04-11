@@ -1,19 +1,20 @@
-@extends('layouts.app')
+<x-layout>
+    <x-slot:title>Browse Jobs</x-slot:title>
 
-@section('content')
-    <h1>Available Roles ({{ $total }})</h1>
+    <h1>Available Roles</h1>
 
-    @if (session('status'))
-        <div class="success-banner" style="background: #d4edda; padding: 10px; color: #155724;">
-            {{ session('status') }}
-        </div>
-    @endif
-
-    @foreach ($jobs as $job)
-        <div class="job-card">
-            <h2>{{ $job['title'] }}</h2>
-            <p>{{ $job['company'] }}</p>
+    @forelse ($jobs as $job)
+        
+        <x-job-card 
+            title="{{ $job['title'] }}" 
+            company="{{ $job['company'] }}" 
+            :is-remote="true"
+        >
             <a href="/jobs/{{ $job['id'] }}">View Details</a>
-        </div>
-    @endforeach
-@endsection
+        </x-job-card>
+
+    @empty
+        <p>No jobs posted yet. Be the first!</p>
+    @endforelse
+
+</x-layout>
